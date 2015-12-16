@@ -20,7 +20,7 @@
 }}
 ```
 
-## tag-search-input Options
+## Component Options
 
 Option                 | Detail
 -----------------------|----------------------
