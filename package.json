@@ -1,7 +1,7 @@
 {
   "name": "ember-tag-search-input",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "Ember Addon ember-tag-search-input: Search input that supports tags",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/inprod/ember-tag-search-input",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -43,12 +43,12 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-cli-sass": "^5.2.0",
+    "ember-cli-sass": "5.2.1",
     "ember-helpers-array-contains": "^1.0.0",
-    "ember-truth-helpers": "^1.2.0"
+    "ember-truth-helpers": "^1.2.0",
+    "eonasdan-bootstrap-datetimepicker": "4.15.35"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "demoUrl": "ember-tag-search-input.surge.sh"
+    "configPath": "tests/dummy/config"
   }
 }

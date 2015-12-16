@@ -27,12 +27,12 @@ function sanitizeToken(token) {
   return null;
 }
 
-function getDefaultContent(configHash, modifiersList) {
+function getDefaultContent(modifierConfig, modifiersList) {
   let key, val, list;
   let allList = [];
 
-  for (key in configHash) {
-    val = configHash[key];
+  for (key in modifierConfig) {
+    val = modifierConfig[key];
     if (val.type === 'list' && val.content) {
       list = val.content.map(function(item) {
         return {
@@ -52,10 +52,10 @@ function getDefaultContent(configHash, modifiersList) {
   return allList.concat(modifiers);
 }
 
-function getAllModifiers(configHash) {
+function getAllModifiers(modifierConfig) {
   let modifiers = [];
-  for (let key in configHash) {
-    let config = configHash[key];
+  for (let key in modifierConfig) {
+    let config = modifierConfig[key];
     let section = config.type === 'date' ? 'time' : 'others';
     modifiers.push({
       value: key,
@@ -67,7 +67,7 @@ function getAllModifiers(configHash) {
   return modifiers;
 }
 
-function tokenize(text, configHash) {
+function tokenize(text, modifierConfig) {
   let tokens = [];
   let mem = '';
   let i = 0;
@@ -76,10 +76,10 @@ function tokenize(text, configHash) {
     var character = text[i];
     if ((character === ' ' || !character)) {
       if (mem) {
-        tokens.push(Token.create({ configHash, fullText: mem }));
+        tokens.push(Token.create({ modifierConfig, fullText: mem }));
       }
       if (character) {
-        tokens.push(Token.create({ configHash, fullText: ' ' }));
+        tokens.push(Token.create({ modifierConfig, fullText: ' ' }));
       }
       mem = '';
     } else if (character !== ' ') {
@@ -89,17 +89,17 @@ function tokenize(text, configHash) {
   return tokens;
 }
 
-function prepareConig(configHash) {
-  let modifiers = getAllModifiers(configHash);
-  configHash['+'] = { type: 'modifier-list', content: modifiers };
-  configHash['_default'] = {
-    type: 'default', content: getDefaultContent(configHash, modifiers)
+function prepareConig(modifierConfig) {
+  let modifiers = getAllModifiers(modifierConfig);
+  modifierConfig['+'] = { type: 'modifier-list', content: modifiers };
+  modifierConfig['_default'] = {
+    type: 'default', content: getDefaultContent(modifierConfig, modifiers)
   };
-  return configHash;
+  return modifierConfig;
 }
 
-export function deserializeQueryString(string, configHash) {
-  return sanitizeTokens(tokenize(string, configHash));
+export function deserializeQueryString(string, modifierConfig) {
+  return sanitizeTokens(tokenize(string, modifierConfig));
 }
 
 export default Ember.Component.extend({
@@ -113,7 +113,7 @@ export default Ember.Component.extend({
   isPopupHidden: false,
   isPopupFocused: false, // when popup focused not triggering enter event when enter clicked
 
-  configHash: {},
+  modifierConfig: {},
   firstTimeFocus: true,
   showHelp: computed('inputValue', 'cursorLocation', 'firstTimeFocus', function() {
     return !get(this, 'inputValue') &&
@@ -121,8 +121,8 @@ export default Ember.Component.extend({
       get(this, 'firstTimeFocus');
   }),
 
-  tokenConfig: computed('configHash', function() {
-    return prepareConig(get(this, 'configHash'));
+  tokenConfig: computed('modifierConfig', function() {
+    return prepareConig(get(this, 'modifierConfig'));
   }),
 
   tokenTypes: ['default', 'modifier-list', 'space'],
@@ -300,8 +300,8 @@ export default Ember.Component.extend({
         this.scrollBackground(this._mainInput.scrollLeft());
       }
 
-      if ((tokenType !== 'default' || model.fullText) && this.attrs.modefierAutoComplete) {
-        this.attrs.modefierAutoComplete(tokensString, sanitizeToken(token));
+      if ((tokenType !== 'default' || model.fullText) && this.attrs.modifierAutoComplete) {
+        this.attrs.modifierAutoComplete(tokensString, sanitizeToken(token));
       }
       if (this.attrs.valueChange) {
         this.attrs.valueChange(tokensString);
@@ -364,8 +364,8 @@ export default Ember.Component.extend({
             this.scrollBackground(target.scrollLeft);
           }
 
-          if (tokenType !== 'default' && this.attrs.modefierAutoComplete) {
-            this.attrs.modefierAutoComplete(tokensString, sanitizeToken(currentToken));
+          if (tokenType !== 'default' && this.attrs.modifierAutoComplete) {
+            this.attrs.modifierAutoComplete(tokensString, sanitizeToken(currentToken));
           }
           if (this.attrs.valueChange) {
             this.attrs.valueChange(tokensString);

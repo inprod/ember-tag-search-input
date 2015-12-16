@@ -9,17 +9,17 @@ export default Ember.Object.extend({
   modifier: '',
   value: '',
 
-  configHash: {},
+  modifierConfig: {},
 
-  config: computed('configHash', 'modifier', 'value', function() {
-    let configHash = get(this, 'configHash');
+  config: computed('modifierConfig', 'modifier', 'value', function() {
+    let modifierConfig = get(this, 'modifierConfig');
     let modifier = get(this, 'modifier');
     let value = get(this, 'value');
 
     if (modifier) {
-      return configHash[modifier];
+      return modifierConfig[modifier];
     } else if (value && (value !== ' ')) {
-      return configHash['_default'];
+      return modifierConfig['_default'];
     }
   }),
 
@@ -40,12 +40,12 @@ export default Ember.Object.extend({
     }
   }),
 
-  fullText: computed('modifier', 'value', 'configHash', {
+  fullText: computed('modifier', 'value', 'modifierConfig', {
     get() {
       return get(this, 'modifier') + get(this, 'value');
     },
     set(key, val) {
-      let configs = get(this, 'configHash');
+      let configs = get(this, 'modifierConfig');
       if (configs) {
         let modifier;
         if (val.substr(0, 1) === '+') {
