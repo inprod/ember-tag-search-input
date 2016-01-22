@@ -10,13 +10,15 @@ export const KEYS = {
 };
 
 export function getMatch(subString, array, key) {
-  return array
-    .filter(function(string) {
-      if (key) { string = string[key]; }
-      return string.toLowerCase().indexOf(subString.toLowerCase()) > -1 &&
-        subString.length < string.length;
-    })
-    .sortBy('length');
+  return array.filter(function(string) {
+      if (key) {
+        string = string[key];
+      }
+      if (string === undefined || string === null) {
+        return false;
+      }
+      return string.toLowerCase().indexOf(subString.toLowerCase()) > -1 && subString.length < string.length;
+    }).sortBy('length');
 }
 
 export function setCursor(node, pos) {
