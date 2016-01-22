@@ -9,16 +9,14 @@ export const KEYS = {
   TAB: 9
 };
 
-export function getMatch(subString, array, key) {
-  return array.filter(function(string) {
-      if (key) {
-        string = string[key];
-      }
-      if (string === undefined || string === null) {
-        return false;
-      }
-      return string.toLowerCase().indexOf(subString.toLowerCase()) > -1 && subString.length < string.length;
-    }).sortBy('length');
+export function stringStartsWith(valueString, checkString) {
+  if (valueString && valueString.length > (checkString || '').length) {
+    if (valueString.startsWith) {
+      return valueString.startsWith(checkString);
+    } else {
+      return valueString.indexOf(checkString) > -1;
+    }
+  }
 }
 
 export function setCursor(node, pos) {

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { getMatch } from './../../util';
+import { stringStartsWith } from './../../util';
 
 const { get } = Ember;
 
@@ -28,18 +28,13 @@ export default {
 
   getHints(string, list) {
     if (list && list.length) {
-      let labelMatches = getMatch(string, list, 'label');
-      let valueMatches = getMatch(string, list, 'value');
 
-      let matches = labelMatches
-        .concat(valueMatches)
-        .uniq()
-        .filter((item) => (item.value !== string))
-        .sortBy('value.length');
+      return list.filter((item) => {
+        if (item.label !== undefined) {
+          return stringStartsWith(item.label, string) || stringStartsWith(item.value, string);
+        }
+      }).uniq().sortBy('value.length');
 
-      if (matches.length) {
-        return matches;
-      }
     }
     return [];
   }

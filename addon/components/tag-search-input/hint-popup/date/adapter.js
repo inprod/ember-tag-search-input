@@ -1,5 +1,5 @@
 /*global moment*/
-import { getMatch } from './../../util';
+import { stringStartsWith } from './../../util';
 
 const MONTHS = moment.months().invoke('toLowerCase');
 const ALLOWED_VALUES = ['yesterday', 'today'].concat(MONTHS);
@@ -43,7 +43,7 @@ export default {
   getHints(string) {
     const possibleValues = [moment().format('YYYY-MM-DD')].concat(ALLOWED_VALUES);
     if (string) {
-      return getMatch(string, possibleValues);
+      return possibleValues.filter((value) => stringStartsWith(value, string));
     }
   }
 };
