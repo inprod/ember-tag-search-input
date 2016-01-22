@@ -110,7 +110,6 @@ export default Ember.Component.extend({
   enterClicked: false,
   upClicked: false,
   downClicked: false,
-  isPopupHidden: false,
   isPopupFocused: false, // when popup focused not triggering enter event when enter clicked
 
   modifierConfig: {},
@@ -123,6 +122,26 @@ export default Ember.Component.extend({
 
   tokenConfig: computed('modifierConfig', function() {
     return prepareConig(get(this, 'modifierConfig'));
+  }),
+
+  allTags: computed('modifierConfig', function() {
+    return Object.keys(get(this, 'modifierConfig')).filter((value) => value !== '_default');
+  }),
+
+  firstThreeTags: computed('allTags.[]', function() {
+    return get(this, 'allTags').slice(0,3);
+  }),
+
+  tagOne: computed('allTags.[]', function() { return get(this, 'allTags').objectAt(0); }),
+  tagTwo: computed('allTags.[]', function() { return get(this, 'allTags').objectAt(1); }),
+  tagThree: computed('allTags.[]', function() { return get(this, 'allTags').objectAt(2); }),
+
+  hasOnlyOneTag: computed.equal('allTags.length', 1),
+  hasOnlyTwoTags: computed.equal('allTags.length', 2),
+  hasMoreThanThreeTags: computed.gt('allTags.length', 3),
+
+  hasMoreThanThreeTags: computed('allTags.[]', function() {
+    return get(this, 'allTags.length') > 3;
   }),
 
   tokenTypes: ['default', 'modifier-list', 'space'],

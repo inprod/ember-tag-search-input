@@ -11,12 +11,8 @@
   placeholder='Search for objects'
   modifierConfig=config
   inputValue=model.queryString
-  isPopupHidden=isSearchPopupHidden
   valueChange=(action 'searchValueChange')
   modifierAutoComplete=(action 'modifierAutoComplete')
-  enter=(action 'search')
-  focus-in=(action 'inputFocusedIn')
-  focus-out=(action 'inputFocusedOut')
 }}
 ```
 
@@ -27,7 +23,6 @@ Option                 | Detail
 placeholder            | Simple placeholder displayed when input has no value
 modifierConfig         | Config object used for getting modifiers
 inputValue             | Initial and bound value of input
-isPopupHidden          | Can be used to hide popups
 valueChange            | Fired when inputValue changes (arguments: 1:newValue)
 modifierAutoComplete   | Fired when the modifier has a valid value (arguments: 1:newValue, 2:modifierValue)
 

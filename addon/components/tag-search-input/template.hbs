@@ -44,7 +44,23 @@
       <span class="arrow"></span>
       <span class="arrow-border"></span>
       <div class="hint-menu with-help">
-        {{yield (action 'concatToInputValue')}}
+        <div class="help-title">
+          Search with Tags
+        </div>
+        <span class='help-text'>
+          Narrow your search using the tag
+          {{#if hasOnlyOneTag}}
+            keyword <span class='modifier'>{{tagOne}}</span>.
+          {{else if hasOnlyTwoTags}}
+            keywords <span class='modifier'>{{tagOne}}</span> or <span class='modifier'>{{tagTwo}}</span>.
+          {{else}}
+            keywords <span class='modifier'>{{tagOne}}</span>, <span class='modifier'>{{tagTwo}}</span> or <span class='modifier'>{{tagThree}}</span>.
+          {{/if}}
+
+          {{#if hasMoreThanThreeTags}}
+            Or press the plus key <span class='modifier'>+</span> to see more searchable tags.
+          {{/if}}
+        </span>
       </div>
     </div>
   {{/if}}
