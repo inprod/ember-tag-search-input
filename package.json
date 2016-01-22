@@ -1,6 +1,6 @@
 {
   "name": "ember-tag-search-input",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Ember Addon ember-tag-search-input: Search input that supports tags",
   "directories": {
     "doc": "doc",
