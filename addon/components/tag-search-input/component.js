@@ -140,10 +140,6 @@ export default Ember.Component.extend({
   hasOnlyTwoTags: computed.equal('allTags.length', 2),
   hasMoreThanThreeTags: computed.gt('allTags.length', 3),
 
-  hasMoreThanThreeTags: computed('allTags.[]', function() {
-    return get(this, 'allTags.length') > 3;
-  }),
-
   tokenTypes: ['default', 'modifier-list', 'space'],
   proxyValue: '',
   inputValue: computed({
