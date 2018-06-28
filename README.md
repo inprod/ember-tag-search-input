@@ -1,3 +1,7 @@
+Please consider using this fork:  https://github.com/bekzod/ember-slack-search-input
+
+This repo is not under active development, we are now using the above version instead.
+
 # Ember Tag Search Input
 
 ## Demo
